@@ -5,12 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
+import { ItemPageModule } from '../item/item.module';
+import { ItemPage } from '../item/item.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ItemPageModule,
     RouterModule.forChild([
       {
         path: '',
@@ -18,6 +21,11 @@ import { HomePage } from './home.page';
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [
+    HomePage
+  ],
+  entryComponents: [
+    ItemPage
+  ],
 })
-export class HomePageModule {}
+export class HomePageModule { }

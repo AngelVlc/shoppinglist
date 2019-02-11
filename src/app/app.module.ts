@@ -10,10 +10,13 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { ItemsService } from './services/items.service';
+import { UtilsService } from './services/utils.service';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [
+    AppComponent
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -23,8 +26,10 @@ import { IonicStorageModule } from '@ionic/storage';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    UtilsService,
+    ItemsService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

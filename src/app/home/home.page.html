@@ -1,12 +1,43 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Ionic Blank
+      Shopping List
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+  <ion-list>
+    <ion-reorder-group (ionItemReorder)="itemMoved($event)" disabled="false">
+      <!-- <ion-item-sliding #slidingItem [disabled]="!allowEdit" *ngFor="let item of items; let i = index"> -->
+
+      <ion-item *ngFor="let item of items; let i = index" (click)="itemClick(i)">
+        <!-- -->
+        <ion-label>{{ getItemLabel(item) }}</ion-label>
+        <ion-reorder slot="end"></ion-reorder>
+      </ion-item>
+
+      <!-- <ion-item-options side="start">
+          <ion-item-option color="danger" (click)="deleteItem(i, slidingItem)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+
+        <ion-item-options side="end">
+          <ion-item-option (click)="editItem(i, slidingItem)">
+            <ion-icon name="create" color="primary-contrast"></ion-icon>
+          </ion-item-option>
+        </ion-item-options> -->
+
+      <!-- </ion-item-sliding> -->
+
+    </ion-reorder-group>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addItem()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>
