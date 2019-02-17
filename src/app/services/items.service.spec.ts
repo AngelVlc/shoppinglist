@@ -57,6 +57,15 @@ describe('ItemsService', () => {
     expect(result).toEqual(items);
   });
 
+  it('loadItems() should return an empty array if there are not items in the storage', async () => {
+    storageSpyObj.get.and.returnValue(null);
+    const result = await itemsService.loadItems();
+    expect(loadingSpyObj.dismiss.calls.count()).toEqual(1);
+    expect(storageSpyObj.get.calls.count()).toEqual(1);
+    expect(storageSpyObj.get.calls.mostRecent().args[0]).toEqual('items');
+    expect(result).toEqual([]);
+  });
+
   it('loadItems() should show an alert if the call to storage fails', async () => {
     storageSpyObj.get.and.throwError('error');
     await itemsService.loadItems();

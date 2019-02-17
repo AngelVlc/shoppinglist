@@ -17,8 +17,11 @@ export class ItemsService {
     const loading = await this.utilsSrv.showLoading('Cargando ...');
 
     try {
-      const data = await this.storage.get(this.storageKey);
+      let data = await this.storage.get(this.storageKey);
       await loading.dismiss();
+      if (!data) {
+        data = [];
+      }
       return data;
     } catch (error) {
       await loading.dismiss();
