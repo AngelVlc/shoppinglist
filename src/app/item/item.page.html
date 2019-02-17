@@ -10,30 +10,30 @@
       <ion-col>
         <ion-item>
           <ion-label stacked>Nombre:</ion-label>
-          <ion-input [(ngModel)]="item.Name"></ion-input>
+          <ion-input id="name" [(ngModel)]="item.Name"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col size="auto">
         <ion-item>
           <ion-label stacked class="colorLabel">Importante:</ion-label>
-          <ion-toggle [(ngModel)]="item.Important"></ion-toggle>
+          <ion-toggle id="important" [(ngModel)]="item.Important"></ion-toggle>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-item>
       <ion-label position="floating">Observaciones:</ion-label>
-      <ion-textarea [(ngModel)]="item.Remarks" rows="8"></ion-textarea>
+      <ion-textarea id="remarks" [(ngModel)]="item.Remarks" rows="8"></ion-textarea>
     </ion-item>
   </ion-list>
 
-  <ion-button (click)="delete()">Eliminar</ion-button>
+  <ion-button id="deleteBtn" *ngIf="index >= 0" (click)="delete()">Eliminar</ion-button>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
     <ion-buttons slot="primary">
-      <ion-button (click)="cancel()">Cancelar</ion-button>
-      <ion-button (click)="ok()">{{ buttonText }}</ion-button>
+      <ion-button id="cancelBtn" (click)="cancel()">Cancelar</ion-button>
+      <ion-button id="okBtn" (click)="ok()">{{ okBtnText }}</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>

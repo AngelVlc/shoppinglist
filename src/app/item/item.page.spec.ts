@@ -1,5 +1,7 @@
+import { DebugElement } from '@angular/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 import { ItemPage } from './item.page';
 
@@ -11,41 +13,137 @@ describe('ItemPage', () => {
   let fixture: ComponentFixture<ItemPage>;
   let modalCtrlSpyObj: jasmine.SpyObj<ModalController>;
   let navParamsSpyObj: jasmine.SpyObj<NavParams>;
+  const existingItem: Item = {
+    Name: 'wadus',
+    Important: true,
+    Remarks: 'these are the remarks'
+  };
+
+  function createComponent(params) {
+    navParamsSpyObj.get.and.callFake((myParam) => {
+      return params[myParam];
+    });
+
+    fixture = TestBed.createComponent(ItemPage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }
+
+  function createComponentWithExistingItem() {
+    const params = {
+      'item': existingItem,
+      'index': 1
+    };
+
+    createComponent(params);
+  }
+
+  function createComponentWithNewItem() {
+    const item = new Item();
+    const params = {
+      'item': item,
+      'index': -1
+    };
+
+    createComponent(params);
+  }
+
+  function getPageElement(): HTMLElement {
+    const debugElement: DebugElement = fixture.debugElement;
+    return debugElement.nativeElement;
+  }
+
+  function getTitleText(): string {
+    return getPageElement().querySelector('ion-header ion-toolbar ion-title').textContent;
+  }
+
+  function getButtonText(): string {
+    return getPageElement().querySelectorAll('ion-footer ion-buttons ion-button')[1].textContent;
+  }
+
+  function getNameInputValue(): string {
+    return fixture.debugElement.query(By.css('#name')).properties.ngModel;
+  }
+
+  function getRemarksInputValue(): string {
+    return fixture.debugElement.query(By.css('#remarks')).properties.ngModel;
+  }
+
+  function getImportantInputValue(): boolean {
+    return fixture.debugElement.query(By.css('#important')).properties.ngModel;
+  }
+
+  function getDeleteButtonElement(): DebugElement {
+    return fixture.debugElement.query(By.css('#deleteBtn'));
+  }
 
   beforeEach(async(() => {
     const modalCtrlSpy = jasmine.createSpyObj('ModalController', ['dismiss']);
     const navParamsSpy = jasmine.createSpyObj('NavParams', ['get']);
 
     TestBed.configureTestingModule({
-      declarations: [ ItemPage ],
+      declarations: [ItemPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers : [
+      providers: [
         { provide: ModalController, useValue: modalCtrlSpy },
         { provide: NavParams, useValue: navParamsSpy }
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     modalCtrlSpyObj = TestBed.get(ModalController);
     navParamsSpyObj = TestBed.get(NavParams);
-    const item = new Item();
-    item.Name = 'wadus';
-    const params = {
-      'item': item,
-      'index': 1
-    };
-    navParamsSpyObj.get.and.callFake((myParam) => {
-      return params[myParam];
-    });
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ItemPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  it('should create the component for an existing item', () => {
+    createComponentWithExistingItem();
+    expect(component).toBeTruthy();
+    expect(getTitleText()).toEqual('Ver artículo');
+    expect(getButtonText()).toEqual('Guardar');
+    expect(getNameInputValue()).toEqual(existingItem.Name);
+    expect(getRemarksInputValue()).toEqual(existingItem.Remarks);
+    expect(getImportantInputValue()).toEqual(existingItem.Important);
+    expect(getDeleteButtonElement()).not.toBeNull();
   });
 
-  it('should create', () => {
+  it('should create the component for a new item', () => {
+    createComponentWithNewItem();
     expect(component).toBeTruthy();
+    expect(getTitleText()).toEqual('Nuevo artículo');
+    expect(getButtonText()).toEqual('Añadir');
+    expect(getNameInputValue()).toBeNull();
+    expect(getRemarksInputValue()).toBeNull();
+    expect(getImportantInputValue()).toEqual(false);
+    expect(getDeleteButtonElement()).toBeNull();
+  });
+
+  it('delete button click should dismiss the modal', () => {
+    createComponentWithExistingItem();
+    const deleteBtn = getDeleteButtonElement();
+    deleteBtn.triggerEventHandler('click', null);
+    expect(modalCtrlSpyObj.dismiss.calls.count()).toEqual(1);
+    const data = {
+      item: null,
+      index: 1
+    };
+    expect(modalCtrlSpyObj.dismiss.calls.mostRecent().args[0]).toEqual(data);
+  });
+
+  it('cancel button click should dismiss the modal', () => {
+    createComponentWithExistingItem();
+    const cancelButton = fixture.debugElement.query(By.css('#cancelBtn'));
+    cancelButton.triggerEventHandler('click', null);
+    expect(modalCtrlSpyObj.dismiss.calls.mostRecent().args[0]).toEqual(null);
+  });
+
+  it('ok button click should dismiss the modal', () => {
+    createComponentWithExistingItem();
+    const cancelButton = fixture.debugElement.query(By.css('#okBtn'));
+    cancelButton.triggerEventHandler('click', null);
+    const data = {
+      item: existingItem,
+      index: 1
+    };
+    expect(modalCtrlSpyObj.dismiss.calls.mostRecent().args[0]).toEqual(data);
   });
 });

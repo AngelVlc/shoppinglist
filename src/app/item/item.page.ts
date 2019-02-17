@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavParams, ModalController } from '@ionic/angular';
 import { Item } from 'src/models/item';
 
@@ -7,26 +7,28 @@ import { Item } from 'src/models/item';
   templateUrl: './item.page.html',
   styleUrls: ['./item.page.scss'],
 })
-export class ItemPage {
+export class ItemPage implements OnInit {
 
   private item: Item;
   private index: number;
 
   private title: string;
 
-  private buttonText: string;
+  private okBtnText: string;
 
-  constructor(private navParams: NavParams
+  constructor(navParams: NavParams
     , private modalController: ModalController) {
 
-    this.item = this.navParams.get('item');
-    this.index = this.navParams.get('index');
+    this.item = navParams.get('item');
+    this.index = navParams.get('index');
+  }
 
+  ngOnInit() {
     this.title = 'Ver artículo';
-    this.buttonText = 'Guardar';
+    this.okBtnText = 'Guardar';
     if (this.index < 0) {
       this.title = 'Nuevo artículo';
-      this.buttonText = 'Añadir';
+      this.okBtnText = 'Añadir';
     }
   }
 
