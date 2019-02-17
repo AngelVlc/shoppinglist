@@ -22,14 +22,14 @@ export class HomePage {
   }
 
   addItem() {
-    this.openModal(-1, true);
+    this.openModal(-1);
   }
 
   async itemClick(index: number) {
-    await this.openModal(index, false);
+    await this.openModal(index);
   }
 
-  private async openModal(index: number, isNew: boolean) {
+  private async openModal(index: number) {
     const props = {
       index: index,
       item: new Item()
