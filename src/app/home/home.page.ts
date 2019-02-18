@@ -45,23 +45,7 @@ export class HomePage {
     });
 
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-      if (!detail.data) {
-        return;
-      }
-
-      const itemFromModal = detail.data.item;
-
-      if (index < 0) {
-        this.items.push(itemFromModal);
-      } else {
-        if (itemFromModal) {
-          this.items[index] = { ...itemFromModal };
-        } else {
-          this.items.splice(index, 1);
-        }
-      }
-
-      this.itemsSrv.saveItems(this.items);
+      this.onModalDismiss(detail);
     });
 
     await modal.present();
@@ -80,4 +64,24 @@ export class HomePage {
     this.items = e.detail.complete(this.items);
   }
 
+  private async onModalDismiss(detail: OverlayEventDetail) {
+    if (!detail.data) {
+      return;
+    }
+
+    const itemFromModal = detail.data.item;
+    const index = detail.data.index;
+
+    if (index < 0) {
+      this.items.push(itemFromModal);
+    } else {
+      if (itemFromModal) {
+        this.items[index] = { ...itemFromModal };
+      } else {
+        this.items.splice(index, 1);
+      }
+    }
+
+    this.itemsSrv.saveItems(this.items);
+  }
 }

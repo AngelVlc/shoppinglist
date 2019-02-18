@@ -129,20 +129,38 @@ describe('ItemPage', () => {
     expect(modalCtrlSpyObj.dismiss.calls.mostRecent().args[0]).toEqual(data);
   });
 
-  it('cancel button click should dismiss the modal', () => {
+  it('cancel button click when the item exists should dismiss the modal', () => {
     createComponentWithExistingItem();
     const cancelButton = fixture.debugElement.query(By.css('#cancelBtn'));
     cancelButton.triggerEventHandler('click', null);
     expect(modalCtrlSpyObj.dismiss.calls.mostRecent().args[0]).toEqual(null);
   });
 
-  it('ok button click should dismiss the modal', () => {
+  it('ok button click when the item exists should dismiss the modal', () => {
     createComponentWithExistingItem();
     const cancelButton = fixture.debugElement.query(By.css('#okBtn'));
     cancelButton.triggerEventHandler('click', null);
     const data = {
       item: existingItem,
       index: 1
+    };
+    expect(modalCtrlSpyObj.dismiss.calls.mostRecent().args[0]).toEqual(data);
+  });
+
+  it('cancel button click when the item is new should dismiss the modal', () => {
+    createComponentWithNewItem();
+    const cancelButton = fixture.debugElement.query(By.css('#cancelBtn'));
+    cancelButton.triggerEventHandler('click', null);
+    expect(modalCtrlSpyObj.dismiss.calls.mostRecent().args[0]).toEqual(null);
+  });
+
+  it('ok button click when the item is new should dismiss the modal', () => {
+    createComponentWithNewItem();
+    const cancelButton = fixture.debugElement.query(By.css('#okBtn'));
+    cancelButton.triggerEventHandler('click', null);
+    const data = {
+      item: (component as any).item,
+      index: -1
     };
     expect(modalCtrlSpyObj.dismiss.calls.mostRecent().args[0]).toEqual(data);
   });
