@@ -1,11 +1,11 @@
 export class Item {
-    Name: string;
-    Remarks: string;
-    Important: boolean;
+    name: string;
+    remarks: string;
+    important: boolean;
 
     constructor() {
-        this.Name = null;
-        this.Remarks = null;
-        this.Important = false;
+        this.name = null;
+        this.remarks = null;
+        this.important = false;
     }
 }

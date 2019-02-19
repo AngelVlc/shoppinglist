@@ -46,9 +46,9 @@ describe('HomePage', () => {
     itemsSrvSpyObj = TestBed.get(ItemsService);
 
     const item1 = new Item();
-    item1.Name = 'item1';
+    item1.name = 'item1';
     const item2 = new Item();
-    item2.Name = 'item2';
+    item2.name = 'item2';
     existingItems = [item1, item2];
   }));
 
@@ -97,16 +97,16 @@ describe('HomePage', () => {
 
   it('getItemLabel() method should add +info to the item name if it has remarks', async () => {
     const item: Item = {
-      Name: 'wadus',
-      Important: false,
-      Remarks: null
+      name: 'wadus',
+      important: false,
+      remarks: null
     };
     expect(component.getItemLabel(item)).toEqual('wadus');
 
     const itemsWithRemarks: Item = {
-      Name: 'wadus',
-      Important: true,
-      Remarks: 'remarks'
+      name: 'wadus',
+      important: true,
+      remarks: 'remarks'
     };
     expect(component.getItemLabel(itemsWithRemarks)).toEqual('wadus (+info)');
   });
@@ -155,9 +155,9 @@ describe('HomePage', () => {
         const itemsCount = existingItems.length;
         fixture.whenRenderingDone().then(async () => {
           const newItem: Item = {
-            Name: 'new item',
-            Important: true,
-            Remarks: 'the remarks'
+            name: 'new item',
+            important: true,
+            remarks: 'the remarks'
           };
           const detail = {
             data: {
@@ -167,9 +167,9 @@ describe('HomePage', () => {
           };
           await (component as any).onModalDismiss(detail);
           expect(component.items.length).toBe(itemsCount + 1);
-          expect(component.items[component.items.length - 1].Name).toEqual(newItem.Name);
-          expect(component.items[component.items.length - 1].Important).toEqual(newItem.Important);
-          expect(component.items[component.items.length - 1].Remarks).toEqual(newItem.Remarks);
+          expect(component.items[component.items.length - 1].name).toEqual(newItem.name);
+          expect(component.items[component.items.length - 1].important).toEqual(newItem.important);
+          expect(component.items[component.items.length - 1].remarks).toEqual(newItem.remarks);
           expect(itemsSrvSpyObj.saveItems).toHaveBeenCalled();
         });
       });
@@ -218,9 +218,9 @@ describe('HomePage', () => {
           };
           await (component as any).onModalDismiss(detail);
           expect(component.items.length).toBe(itemsCount);
-          expect(component.items[0].Name).toEqual(modifiedItem.Name);
-          expect(component.items[0].Important).toEqual(modifiedItem.Important);
-          expect(component.items[0].Remarks).toEqual(modifiedItem.Remarks);
+          expect(component.items[0].name).toEqual(modifiedItem.name);
+          expect(component.items[0].important).toEqual(modifiedItem.important);
+          expect(component.items[0].remarks).toEqual(modifiedItem.remarks);
           expect(itemsSrvSpyObj.saveItems).toHaveBeenCalled();
         });
       });

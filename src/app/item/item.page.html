@@ -10,19 +10,19 @@
       <ion-col>
         <ion-item>
           <ion-label stacked>Nombre:</ion-label>
-          <ion-input id="name" [(ngModel)]="item.Name"></ion-input>
+          <ion-input id="name" [(ngModel)]="item.name"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col size="auto">
         <ion-item>
           <ion-label stacked class="colorLabel">Importante:</ion-label>
-          <ion-toggle id="important" [(ngModel)]="item.Important"></ion-toggle>
+          <ion-toggle id="important" [(ngModel)]="item.important"></ion-toggle>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-item>
       <ion-label position="floating">Observaciones:</ion-label>
-      <ion-textarea id="remarks" [(ngModel)]="item.Remarks" rows="8"></ion-textarea>
+      <ion-textarea id="remarks" [(ngModel)]="item.remarks" rows="8"></ion-textarea>
     </ion-item>
   </ion-list>
 

@@ -32,9 +32,9 @@ describe('ItemsService', () => {
     utilsSrvSpyObj.showLoading.and.returnValue(loadingSpyObj);
 
     const item1 = new Item();
-    item1.Name = 'item1';
+    item1.name = 'item1';
     const item2 = new Item();
-    item2.Name = 'item2';
+    item2.name = 'item2';
     items = [item1, item2];
   });
 
@@ -45,7 +45,7 @@ describe('ItemsService', () => {
   it('loadItems() should show a loading', async () => {
     await itemsService.loadItems();
     expect(utilsSrvSpyObj.showLoading.calls.count()).toEqual(1);
-    expect(utilsSrvSpyObj.showLoading.calls.mostRecent().args[0]).toEqual('Cargando ...');
+    expect(utilsSrvSpyObj.showLoading).toHaveBeenCalledWith('Cargando ...');
   });
 
   it('loadItems() should return items stored in storage', async () => {
@@ -53,7 +53,7 @@ describe('ItemsService', () => {
     const result = await itemsService.loadItems();
     expect(loadingSpyObj.dismiss.calls.count()).toEqual(1);
     expect(storageSpyObj.get.calls.count()).toEqual(1);
-    expect(storageSpyObj.get.calls.mostRecent().args[0]).toEqual('items');
+    expect(storageSpyObj.get).toHaveBeenCalledWith('items');
     expect(result).toEqual(items);
   });
 
@@ -62,7 +62,7 @@ describe('ItemsService', () => {
     const result = await itemsService.loadItems();
     expect(loadingSpyObj.dismiss.calls.count()).toEqual(1);
     expect(storageSpyObj.get.calls.count()).toEqual(1);
-    expect(storageSpyObj.get.calls.mostRecent().args[0]).toEqual('items');
+    expect(storageSpyObj.get).toHaveBeenCalledWith('items');
     expect(result).toEqual([]);
   });
 
@@ -71,22 +71,20 @@ describe('ItemsService', () => {
     await itemsService.loadItems();
     expect(loadingSpyObj.dismiss.calls.count()).toEqual(1);
     expect(utilsSrvSpyObj.showAlert.calls.count()).toEqual(1);
-    expect(utilsSrvSpyObj.showAlert.calls.mostRecent().args[0]).toEqual('Error al leer del storage');
-    expect(utilsSrvSpyObj.showAlert.calls.mostRecent().args[1]).toEqual('error');
+    expect(utilsSrvSpyObj.showAlert).toHaveBeenCalledWith('Error al leer del storage', 'error');
   });
 
   it('saveItems() should show a loading', async () => {
     await itemsService.saveItems(items);
     expect(utilsSrvSpyObj.showLoading.calls.count()).toEqual(1);
-    expect(utilsSrvSpyObj.showLoading.calls.mostRecent().args[0]).toEqual('Guardando ...');
+    expect(utilsSrvSpyObj.showLoading).toHaveBeenCalledWith('Guardando ...');
   });
 
   it('saveItems() should save items in storage', async () => {
     await itemsService.saveItems(items);
     expect(loadingSpyObj.dismiss.calls.count()).toEqual(1);
     expect(storageSpyObj.set.calls.count()).toEqual(1);
-    expect(storageSpyObj.set.calls.mostRecent().args[0]).toEqual('items');
-    expect(storageSpyObj.set.calls.mostRecent().args[1]).toEqual(items);
+    expect(storageSpyObj.set).toHaveBeenCalledWith('items', items);
   });
 
   it('saveItems() should show an alert if the call to storage fails', async () => {
@@ -94,8 +92,7 @@ describe('ItemsService', () => {
     await itemsService.saveItems(items);
     expect(loadingSpyObj.dismiss.calls.count()).toEqual(1);
     expect(utilsSrvSpyObj.showAlert.calls.count()).toEqual(1);
-    expect(utilsSrvSpyObj.showAlert.calls.mostRecent().args[0]).toEqual('Error al guardar en el storage');
-    expect(utilsSrvSpyObj.showAlert.calls.mostRecent().args[1]).toEqual('error');
+    expect(utilsSrvSpyObj.showAlert).toHaveBeenCalledWith('Error al guardar en el storage', 'error');
   });
 
 });

@@ -36,7 +36,7 @@ describe('UtilsService', () => {
     alertCtrlSpyObj.create.and.returnValue(alertSpyObj);
     await utilsService.showAlert('title', 'message');
     expect(alertCtrlSpyObj.create.calls.count()).toEqual(1);
-    expect(alertCtrlSpyObj.create.calls.mostRecent().args[0]).toEqual({
+    expect(alertCtrlSpyObj.create).toHaveBeenCalledWith({
       header: 'title',
       message: 'message',
       buttons: ['OK']
@@ -49,7 +49,7 @@ describe('UtilsService', () => {
     loadingCtrlSpyObj.create.and.returnValue(loadingSpyObj);
     const result = await utilsService.showLoading('message');
     expect(loadingCtrlSpyObj.create.calls.count()).toEqual(1);
-    expect(loadingCtrlSpyObj.create.calls.mostRecent().args[0]).toEqual({
+    expect(loadingCtrlSpyObj.create).toHaveBeenCalledWith({
       message: 'message',
     });
     expect(loadingSpyObj.present.calls.count()).toEqual(1);

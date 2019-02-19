@@ -52,8 +52,8 @@ export class HomePage {
   }
 
   getItemLabel(item) {
-    let result = item.Name;
-    if (item.Remarks) {
+    let result = item.name;
+    if (item.remarks) {
       result += ' (+info)';
     }
     return result;

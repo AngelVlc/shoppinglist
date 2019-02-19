@@ -14,9 +14,9 @@ describe('ItemPage', () => {
   let modalCtrlSpyObj: jasmine.SpyObj<ModalController>;
   let navParamsSpyObj: jasmine.SpyObj<NavParams>;
   const existingItem: Item = {
-    Name: 'wadus',
-    Important: true,
-    Remarks: 'these are the remarks'
+    name: 'wadus',
+    important: true,
+    remarks: 'these are the remarks'
   };
 
   function createComponent(params) {
@@ -100,9 +100,9 @@ describe('ItemPage', () => {
     expect(component).toBeTruthy();
     expect(getTitleText()).toEqual('Ver artículo');
     expect(getButtonText()).toEqual('Guardar');
-    expect(getNameInputValue()).toEqual(existingItem.Name);
-    expect(getRemarksInputValue()).toEqual(existingItem.Remarks);
-    expect(getImportantInputValue()).toEqual(existingItem.Important);
+    expect(getNameInputValue()).toEqual(existingItem.name);
+    expect(getRemarksInputValue()).toEqual(existingItem.remarks);
+    expect(getImportantInputValue()).toEqual(existingItem.important);
     expect(getDeleteButtonElement()).not.toBeNull();
   });
 
@@ -126,14 +126,14 @@ describe('ItemPage', () => {
       item: null,
       index: 1
     };
-    expect(modalCtrlSpyObj.dismiss.calls.mostRecent().args[0]).toEqual(data);
+    expect(modalCtrlSpyObj.dismiss).toHaveBeenCalledWith(data);
   });
 
   it('cancel button click when the item exists should dismiss the modal', () => {
     createComponentWithExistingItem();
     const cancelButton = fixture.debugElement.query(By.css('#cancelBtn'));
     cancelButton.triggerEventHandler('click', null);
-    expect(modalCtrlSpyObj.dismiss.calls.mostRecent().args[0]).toEqual(null);
+    expect(modalCtrlSpyObj.dismiss).toHaveBeenCalledWith(null);
   });
 
   it('ok button click when the item exists should dismiss the modal', () => {
@@ -144,14 +144,14 @@ describe('ItemPage', () => {
       item: existingItem,
       index: 1
     };
-    expect(modalCtrlSpyObj.dismiss.calls.mostRecent().args[0]).toEqual(data);
+    expect(modalCtrlSpyObj.dismiss).toHaveBeenCalledWith(data);
   });
 
   it('cancel button click when the item is new should dismiss the modal', () => {
     createComponentWithNewItem();
     const cancelButton = fixture.debugElement.query(By.css('#cancelBtn'));
     cancelButton.triggerEventHandler('click', null);
-    expect(modalCtrlSpyObj.dismiss.calls.mostRecent().args[0]).toEqual(null);
+    expect(modalCtrlSpyObj.dismiss).toHaveBeenCalledWith(null);
   });
 
   it('ok button click when the item is new should dismiss the modal', () => {
@@ -162,6 +162,6 @@ describe('ItemPage', () => {
       item: (component as any).item,
       index: -1
     };
-    expect(modalCtrlSpyObj.dismiss.calls.mostRecent().args[0]).toEqual(data);
+    expect(modalCtrlSpyObj.dismiss).toHaveBeenCalledWith(data);
   });
 });
