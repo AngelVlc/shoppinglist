@@ -8,7 +8,7 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-reorder-group id="reorderGroup" (ionItemReorder)="itemMoved($event)" disabled="false">
+    <ion-reorder-group data-test-id="reorderGroup" (ionItemReorder)="itemMoved($event)" disabled="false">
 
       <ion-item *ngFor="let item of items; let i = index" (click)="itemClick(i)">
         <ion-label [color]="item.important ? 'danger' : 'default'">{{ getItemLabel(item) }}</ion-label>
@@ -19,7 +19,7 @@
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button id="addBtn" (click)="addItem()">
+    <ion-fab-button data-test-id="addBtn" (click)="addItem()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

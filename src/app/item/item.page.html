@@ -10,30 +10,30 @@
       <ion-col>
         <ion-item>
           <ion-label stacked>Nombre:</ion-label>
-          <ion-input id="name" [(ngModel)]="item.name"></ion-input>
+          <ion-input data-test-id="name" [(ngModel)]="item.name"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col size="auto">
         <ion-item>
           <ion-label stacked class="colorLabel">Importante:</ion-label>
-          <ion-toggle id="important" [(ngModel)]="item.important"></ion-toggle>
+          <ion-toggle data-test-id="important" [(ngModel)]="item.important"></ion-toggle>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-item>
       <ion-label position="floating">Observaciones:</ion-label>
-      <ion-textarea id="remarks" [(ngModel)]="item.remarks" rows="8"></ion-textarea>
+      <ion-textarea data-test-id="remarks" [(ngModel)]="item.remarks" rows="8"></ion-textarea>
     </ion-item>
   </ion-list>
 
-  <ion-button id="deleteBtn" *ngIf="index >= 0" (click)="delete()">Eliminar</ion-button>
+  <ion-button data-test-id="deleteBtn" *ngIf="index >= 0" (click)="delete()">Eliminar</ion-button>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
     <ion-buttons slot="primary">
-      <ion-button id="cancelBtn" (click)="cancel()">Cancelar</ion-button>
-      <ion-button id="okBtn" (click)="ok()">{{ okBtnText }}</ion-button>
+      <ion-button data-test-id="cancelBtn" (click)="cancel()">Cancelar</ion-button>
+      <ion-button data-test-id="okBtn" (click)="ok()">{{ okBtnText }}</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>
