@@ -25,7 +25,7 @@ describe('HomePage', () => {
   }
 
   function getAddButtonElement(): DebugElement {
-    return fixture.debugElement.query(By.css('#addBtn'));
+    return fixture.debugElement.query(By.css('[data-test-id="addBtn"]'));
   }
 
   beforeEach(async(() => {
@@ -113,7 +113,7 @@ describe('HomePage', () => {
 
   it('ion reorder group should have disabled = false', async () => {
     createComponent(existingItems);
-    const reorderGroup = fixture.debugElement.query(By.css('#reorderGroup'));
+    const reorderGroup = fixture.debugElement.query(By.css('[data-test-id="reorderGroup"]'));
     expect(reorderGroup.attributes['disabled']).toEqual('false');
   });
 

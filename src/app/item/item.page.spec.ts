@@ -62,19 +62,19 @@ describe('ItemPage', () => {
   }
 
   function getNameInputValue(): string {
-    return fixture.debugElement.query(By.css('#name')).properties.ngModel;
+    return fixture.debugElement.query(By.css('[data-test-id="name"]')).properties.ngModel;
   }
 
   function getRemarksInputValue(): string {
-    return fixture.debugElement.query(By.css('#remarks')).properties.ngModel;
+    return fixture.debugElement.query(By.css('[data-test-id="remarks"]')).properties.ngModel;
   }
 
   function getImportantInputValue(): boolean {
-    return fixture.debugElement.query(By.css('#important')).properties.ngModel;
+    return fixture.debugElement.query(By.css('[data-test-id="important"]')).properties.ngModel;
   }
 
   function getDeleteButtonElement(): DebugElement {
-    return fixture.debugElement.query(By.css('#deleteBtn'));
+    return fixture.debugElement.query(By.css('[data-test-id="deleteBtn"]'));
   }
 
   beforeEach(async(() => {
@@ -131,14 +131,14 @@ describe('ItemPage', () => {
 
   it('cancel button click when the item exists should dismiss the modal', () => {
     createComponentWithExistingItem();
-    const cancelButton = fixture.debugElement.query(By.css('#cancelBtn'));
+    const cancelButton = fixture.debugElement.query(By.css('[data-test-id="cancelBtn"]'));
     cancelButton.triggerEventHandler('click', null);
     expect(modalCtrlSpyObj.dismiss).toHaveBeenCalledWith(null);
   });
 
   it('ok button click when the item exists should dismiss the modal', () => {
     createComponentWithExistingItem();
-    const cancelButton = fixture.debugElement.query(By.css('#okBtn'));
+    const cancelButton = fixture.debugElement.query(By.css('[data-test-id="okBtn"]'));
     cancelButton.triggerEventHandler('click', null);
     const data = {
       item: existingItem,
@@ -149,14 +149,14 @@ describe('ItemPage', () => {
 
   it('cancel button click when the item is new should dismiss the modal', () => {
     createComponentWithNewItem();
-    const cancelButton = fixture.debugElement.query(By.css('#cancelBtn'));
+    const cancelButton = fixture.debugElement.query(By.css('[data-test-id="cancelBtn"]'));
     cancelButton.triggerEventHandler('click', null);
     expect(modalCtrlSpyObj.dismiss).toHaveBeenCalledWith(null);
   });
 
   it('ok button click when the item is new should dismiss the modal', () => {
     createComponentWithNewItem();
-    const cancelButton = fixture.debugElement.query(By.css('#okBtn'));
+    const cancelButton = fixture.debugElement.query(By.css('[data-test-id="okBtn"]'));
     cancelButton.triggerEventHandler('click', null);
     const data = {
       item: (component as any).item,
