@@ -1,4 +1,4 @@
-# shoppinglist
+# shoppinglist [![Build Status](https://travis-ci.org/AngelVlc/shoppinglist.svg?branch=master)](https://travis-ci.org/AngelVlc/shoppinglist)
 
 ## Tests
 

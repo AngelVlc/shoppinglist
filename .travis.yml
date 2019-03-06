@@ -1,9 +1,17 @@
-language: node_js
-node_js:
-  - "10.11.0"
-addons:
-  chrome: stable
-before_script:
-  - npm install -g ionic cordova
-  - npm test
-  - npm run e2e
+jobs:
+  include:
+    - stage: npm audit && test
+      language: node_js
+      node_js:
+        - "10.11.0"
+      addons:
+        chrome: stable
+      script:
+        - npm audit
+        - npm install -g ionic cordova
+        - npm test
+        - npm run e2e
+    - stage: build
+      language: minimal
+      script:
+        - docker-compose up --build
