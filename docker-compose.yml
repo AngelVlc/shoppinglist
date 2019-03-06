@@ -1,0 +1,7 @@
+version: '2.2'
+services:
+  main:
+    build: .
+    command: bash -c "npm install && npm rebuild node-sass  && gradle && ionic cordova build android --verbose"
+    volumes:
+      - '.:/app'
