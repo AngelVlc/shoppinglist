@@ -9,12 +9,10 @@ import { Item } from 'src/models/item';
 })
 export class ItemPage implements OnInit {
 
-  private item: Item;
-  private index: number;
-
-  private title: string;
-
-  private okBtnText: string;
+  item: Item;
+  index: number;
+  title: string;
+  okBtnText: string;
 
   constructor(navParams: NavParams
     , private modalController: ModalController) {
