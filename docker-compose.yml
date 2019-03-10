@@ -2,6 +2,6 @@ version: '2.2'
 services:
   main:
     build: .
-    command: bash -c "npm install && npm rebuild node-sass && ionic cordova build android --prod --release"
+    command: "ionic cordova build android --prod --release"
     volumes:
       - '.:/app'
