@@ -1,17 +1,21 @@
 jobs:
   include:
-    - stage: npm audit && test
-      language: node_js
-      node_js:
-        - "10.11.0"
-      addons:
-        chrome: stable
-      script:
-        - npm audit
-        - npm install -g ionic cordova
-        - npm test
-        - npm run e2e
-    - stage: build
-      language: minimal
-      script:
-        - docker-compose up --build
+  - stage: npm audit && test
+    language: node_js
+    node_js:
+    - 10.11.0
+    addons:
+      chrome: stable
+    script:
+    - npm audit
+    - npm install -g ionic cordova
+    - npm test
+    - npm run e2e
+  - stage: build
+    language: minimal
+    before_install:
+    - openssl aes-256-cbc -K $encrypted_61627df7c213_key -iv $encrypted_61627df7c213_iv
+      -in ShoppingList.keystore.enc -out ShoppingList.keystore -d
+    script:
+    - docker-compose build --build-arg KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD main
+    - docker-compose up --exit-code-from main

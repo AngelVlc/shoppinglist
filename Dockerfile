@@ -1,10 +1,7 @@
 FROM angelvlc/ionic-build
 
-ENV APP /app
+ARG KEYSTORE_PASSWORD
+ENV APP=/app KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD
 
-# app
 WORKDIR $APP
 COPY . $APP
-
-RUN npm install \
-  && npm rebuild node-sass

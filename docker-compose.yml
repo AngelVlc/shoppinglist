@@ -2,6 +2,6 @@ version: '2.2'
 services:
   main:
     build: .
-    command: "ionic cordova build android --prod --release"
+    command: "bash buildAndroid"
     volumes:
       - '.:/app'
