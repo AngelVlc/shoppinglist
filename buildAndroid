@@ -10,7 +10,6 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Executing jarsigner ..."
-echo $PRUEBA
 jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore ./ShoppingList.keystore -storepass $KEYSTORE_PASSWORD /app/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ShoppingList
 if [ $? -ne 0 ]; then
   exit 1

@@ -34,3 +34,6 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 
 ShoppingList.keystore
+google_play_api_key.json
+ShoppingList_release_signed.apk
+google_files.tar

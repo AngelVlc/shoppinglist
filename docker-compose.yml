@@ -1,7 +1,0 @@
-version: '2.2'
-services:
-  main:
-    build: .
-    command: "bash buildAndroid"
-    volumes:
-      - '.:/app'
