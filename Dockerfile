@@ -1,4 +1,5 @@
 FROM angelvlc/ionic-build as builder
+ENV APP=/app
 WORKDIR $APP
 COPY . $APP
 RUN npm install \
