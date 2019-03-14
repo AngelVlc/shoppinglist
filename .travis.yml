@@ -12,7 +12,7 @@ jobs:
     - npm test
     - npm run e2e
   - stage: build
-    if: tag =~ ^(?!v).+
+    if: tag IS blank OR tag =~ ^(?!v).+
     language: minimal
     script:
     - docker build -t shoppinglist .
