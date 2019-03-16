@@ -20,14 +20,16 @@
     </ion-item>
   </ion-list>
 
-  <ion-button data-test-id="deleteBtn" *ngIf="index >= 0" (click)="delete()">Eliminar</ion-button>
+  <ion-button data-test-id="deleteBtn" fill="clear" *ngIf="index >= 0" (click)="delete()">Eliminar</ion-button>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
-    <ion-buttons slot="primary">
-      <ion-button data-test-id="cancelBtn" (click)="cancel()">Cancelar</ion-button>
+    <ion-buttons slot="start">      
       <ion-button data-test-id="okBtn" (click)="ok()">{{ okBtnText }}</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button data-test-id="cancelBtn" (click)="cancel()">Cancelar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>
