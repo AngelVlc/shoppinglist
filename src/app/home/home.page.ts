@@ -12,6 +12,7 @@ import { OverlayEventDetail } from '@ionic/core';
 })
 export class HomePage {
   items: Item[] = [];
+  selectedItems: Item[] = [];
 
   constructor(private itemsSrv: ItemsService
     , private modalCrtl: ModalController) {
@@ -21,11 +22,11 @@ export class HomePage {
     });
   }
 
-  addItem() {
-    this.openModal(-1);
+  async onAddButtonClicked() {
+    await this.openModal(-1);
   }
 
-  async itemClick(index: number) {
+  async onItemTapped(index: number) {
     await this.openModal(index);
   }
 
@@ -59,7 +60,7 @@ export class HomePage {
     return result;
   }
 
-  async itemMoved(e) {
+  async onItemMoved(e) {
     await this.itemsSrv.saveItems(this.items);
     this.items = e.detail.complete(this.items);
   }
@@ -82,6 +83,37 @@ export class HomePage {
       }
     }
 
-    this.itemsSrv.saveItems(this.items);
+    await this.itemsSrv.saveItems(this.items);
+  }
+
+  onItemPressed(item) {
+    const foundIndex = this.indexOfSelectedItem(item);
+    if (foundIndex >= 0) {
+      this.selectedItems.splice(foundIndex, 1);
+    } else {
+      this.selectedItems.push(item);
+    }
+  }
+
+  showDeleteButton() {
+    return this.selectedItems.length > 0;
+  }
+
+  async onDeleteSelectedButtonClicked() {
+    this.selectedItems.forEach(item => {
+      this.items.splice(this.items.indexOf(item), 1);
+    });
+
+    this.selectedItems = [];
+
+    await this.itemsSrv.saveItems(this.items);
+  }
+
+  isSelectedItem(item) {
+    return this.indexOfSelectedItem(item) >= 0;
+  }
+
+  private indexOfSelectedItem(item) {
+    return this.selectedItems.indexOf(item);
   }
 }

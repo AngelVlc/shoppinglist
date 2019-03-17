@@ -4,11 +4,12 @@ import { browser, ElementFinder, ElementArrayFinder, by } from "protractor";
 
 export class HomePage extends BasePage {
 
-  private addButton = 'addBtn';
-  private title = 'homeTitle';
-  private itemPage = new ItemPage();
+  private _addButton = 'addBtn';
+  private _deleteSelectedButton = 'deleteSelectedBtn';
+  private _title = 'homeTitle';
+  private _itemPage = new ItemPage();
   private _importantItemColor = 'rgba(240, 65, 65, 1)';
-  private _normalItemColor = 'rgba(0, 0, 0, 1)';
+  private _normalItemColor = 'rgba(34, 36, 40, 1)';
 
   public get importantItemColor(): string {
     return this._importantItemColor;
@@ -27,14 +28,19 @@ export class HomePage extends BasePage {
   }
 
   clickAddButton() {
-    const addButton = this.getElementByTestId(this.addButton);
-    return this.clickButton(addButton);
+    const button = this.getElementByTestId(this._addButton);
+    return this.clickButton(button);
+  }
+
+  clickDeleteSelectedButton() {
+    const button = this.getElementByTestId(this._deleteSelectedButton);
+    return this.clickButton(button);
   }
 
   async addItem(name: string, important: boolean, remarks: string) {
     await this.clickAddButton();
-    await this.itemPage.fillFields(name, important, remarks);
-    await this.itemPage.clickOkButton();
+    await this._itemPage.fillFields(name, important, remarks);
+    await this._itemPage.clickOkButton();
     return this.waitVisible();
   }
 
@@ -43,7 +49,7 @@ export class HomePage extends BasePage {
   }
 
   waitVisible() {
-    const title = this.getElementByTestId(this.title);
+    const title = this.getElementByTestId(this._title);
     return this.waitForVisibleElement(title);
   }
 
@@ -57,20 +63,26 @@ export class HomePage extends BasePage {
 
   async editItem(item: ElementFinder, name: string, important: boolean, remarks: string) {
     await item.click();
-    await this.itemPage.fillFields(name, important, remarks);
-    await this.itemPage.clickOkButton();
+    await this._itemPage.fillFields(name, important, remarks);
+    await this._itemPage.clickOkButton();
     return this.waitVisible();
   }
 
   async deleteItem(item: ElementFinder) {
     await item.click();
-    return this.itemPage.clickDeleteButton();
+    return this._itemPage.clickDeleteButton();
   }
 
   async editAndCancelItem(item: ElementFinder, name: string, important: boolean, remarks: string) {
     await item.click();
-    await this.itemPage.fillFields(name, important, remarks);
-    await this.itemPage.clickCancelButton();
+    await this._itemPage.fillFields(name, important, remarks);
+    await this._itemPage.clickCancelButton();
     return this.waitVisible();
+  }
+
+  async selectItem(item: ElementFinder) {
+    await browser.actions().mouseDown(item).perform();
+    await browser.sleep(300);
+    return browser.actions().mouseUp(item).perform();
   }
 }

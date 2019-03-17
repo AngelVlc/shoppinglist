@@ -69,4 +69,18 @@ describe('new App', () => {
     items = await homePage.getItems();
     expect(item1Loc).not.toEqual(await items[0].getLocation());
   });
+
+  it('should allow to delete several items', async () => {
+    await homePage.addItem('item 1', false, null);
+    await homePage.addItem('item 2', false, null);
+    await homePage.addItem('item 3', false, null);
+    await homePage.addItem('item 4', false, null);
+    let items = await homePage.getItems();
+    await homePage.selectItem(items[1].$('ion-label'));
+    await homePage.selectItem(items[2].$('ion-label'));
+    await homePage.selectItem(items[3].$('ion-label'));
+    await homePage.clickDeleteSelectedButton();
+    items = await homePage.getItems();
+    expect(items.length).toEqual(1);
+  });
 });
