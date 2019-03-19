@@ -30,11 +30,11 @@ export class ItemPage implements OnInit {
     }
   }
 
-  async cancel() {
+  async onCancelButtonClicked() {
     await this.modalController.dismiss(null);
   }
 
-  async ok() {
+  async onOkButtonClicked() {
     const data = {
       item: this.item,
       index: this.index
@@ -42,7 +42,7 @@ export class ItemPage implements OnInit {
     await this.modalController.dismiss(data);
   }
 
-  async delete() {
+  async onDeleteButtonClicked() {
     const data = {
       item: null,
       index: this.index

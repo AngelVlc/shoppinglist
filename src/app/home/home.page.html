@@ -8,18 +8,25 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-reorder-group data-test-id="reorderGroup" (ionItemReorder)="itemMoved($event)" disabled="false">
+    <ion-reorder-group data-test-id="reorderGroup" (ionItemReorder)="onItemMoved($event)" disabled="false">
 
-      <ion-item *ngFor="let item of items; let i = index" (click)="itemClick(i)">
-        <ion-label [color]="item.important ? 'danger' : 'default'">{{ getItemLabel(item) }}</ion-label>
-        <ion-reorder slot="end"></ion-reorder>
+      <ion-item *ngFor="let item of items; let i = index" (tap)="onItemTapped(i)" (press)="onItemPressed(item)" button="true"
+        [color]="isSelectedItem(item) ? 'medium': ''">
+        <ion-reorder slot="start"></ion-reorder>
+        <ion-label [color]="item.important ? 'danger' : 'dark'">{{ getItemLabel(item) }}</ion-label>
       </ion-item>
 
     </ion-reorder-group>
   </ion-list>
 
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed" *ngIf="showDeleteButton()">
+    <ion-fab-button data-test-id="deleteSelectedBtn" (click)="onDeleteSelectedButtonClicked()">
+      <ion-icon name="trash"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button data-test-id="addBtn" (click)="addItem()">
+    <ion-fab-button data-test-id="addBtn" (click)="onAddButtonClicked()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

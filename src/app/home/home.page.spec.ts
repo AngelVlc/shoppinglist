@@ -1,7 +1,7 @@
 import { DebugElement } from '@angular/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { By, HAMMER_LOADER } from '@angular/platform-browser';
 
 import { HomePage } from './home.page';
 
@@ -9,6 +9,8 @@ import { ModalController } from '@ionic/angular';
 import { ItemsService } from '../services/items.service';
 import { Item } from 'src/models/item';
 import { ItemPage } from '../item/item.page';
+
+import 'hammerjs';
 
 describe('HomePage', () => {
   let component: HomePage;
@@ -37,7 +39,8 @@ describe('HomePage', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: ModalController, useValue: modalCtrlSpy },
-        { provide: ItemsService, useValue: itemsSrvSpy }
+        { provide: ItemsService, useValue: itemsSrvSpy },
+        { provide: HAMMER_LOADER, useValue: HAMMER_LOADER },
       ]
     })
       .compileComponents();
@@ -79,9 +82,10 @@ describe('HomePage', () => {
       expect(index).toEqual(-1);
     });
     getAddButtonElement().triggerEventHandler('click', null);
+    expect(spy.calls.count()).toBe(1);
   });
 
-  it('item click should open the modal', async () => {
+  it('item tap should open the modal', async () => {
     createComponent(existingItems);
     fixture.whenRenderingDone().then(() => {
       fixture.detectChanges();
@@ -91,7 +95,23 @@ describe('HomePage', () => {
       spy.and.callFake((index) => {
         expect(index).toEqual(foundItems.length - 1);
       });
-      lastItem.triggerEventHandler('click', null);
+      lastItem.triggerEventHandler('tap', null);
+      expect(spy.calls.count()).toBe(1);
+    });
+  });
+
+  it('item press should mark it as selected', async () => {
+    createComponent(existingItems);
+    fixture.whenRenderingDone().then(() => {
+      fixture.detectChanges();
+      const foundItems = fixture.debugElement.queryAll(By.css('ion-item'));
+      const lastItem = foundItems[foundItems.length - 1];
+      const spy = spyOn<any>(component, 'onItemPressed');
+      spy.and.callFake((item) => {
+        expect(item).toEqual(existingItems[existingItems.length - 1]);
+      });
+      lastItem.triggerEventHandler('press', null);
+      expect(spy.calls.count()).toBe(1);
     });
   });
 
@@ -115,6 +135,51 @@ describe('HomePage', () => {
     createComponent(existingItems);
     const reorderGroup = fixture.debugElement.query(By.css('[data-test-id="reorderGroup"]'));
     expect(reorderGroup.attributes['disabled']).toEqual('false');
+  });
+
+  it('onItemPressed() should change the selected value of a component depending on its previous selected value', async () => {
+    const item: Item = {
+      name: 'wadus',
+      important: false,
+      remarks: null
+    };
+    component.onItemPressed(item)
+    expect(component.selectedItems.length).toEqual(1);
+    component.onItemPressed(item)
+    expect(component.selectedItems.length).toEqual(0);
+  });
+
+  it('showDeleteButton() should return true if some item is selected and false when no one is selected', async () => {
+    createComponent(existingItems);
+    fixture.whenRenderingDone().then(async () => {
+      expect(component.showDeleteButton()).toEqual(false);
+      component.selectedItems.push(component.items[0]);
+      expect(component.showDeleteButton()).toEqual(true);
+    });
+  });
+
+  it('onDeleteSelectedButtonClicked() should remove the selected items', async () => {
+    const items = [...existingItems];
+    const originalLength = items.length;
+    const firstItemName = items[0].name;
+    createComponent(existingItems);
+    fixture.whenRenderingDone().then(async () => {
+      component.selectedItems.push(component.items[0]);
+      component.onDeleteSelectedButtonClicked();
+      expect(component.items.length).toEqual(originalLength - 1);
+      expect(component.items[0].name).not.toEqual(firstItemName);
+      expect(itemsSrvSpyObj.saveItems).toHaveBeenCalled();
+      expect(component.selectedItems.length).toEqual(0);
+    });
+  });
+
+  it('isSelectedItem() should return true if the item is selected', async() => {
+    createComponent(existingItems);
+    fixture.whenRenderingDone().then(async () => {
+      expect(component.isSelectedItem(component.items[0])).toBe(false);
+      component.selectedItems.push(component.items[0]);
+      expect(component.isSelectedItem(component.items[0])).toBe(true);
+    });
   });
 
   describe('openModal()', () => {

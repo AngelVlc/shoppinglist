@@ -57,7 +57,7 @@ describe('ItemPage', () => {
     return getPageElement().querySelector('ion-header ion-toolbar ion-title').textContent;
   }
 
-  function getButtonText(): string {
+  function getActionButtonText(): string {
     return getPageElement().querySelectorAll('ion-footer ion-buttons ion-button')[1].textContent;
   }
 
@@ -99,7 +99,7 @@ describe('ItemPage', () => {
     createComponentWithExistingItem();
     expect(component).toBeTruthy();
     expect(getTitleText()).toEqual('Ver artículo');
-    expect(getButtonText()).toEqual('Guardar');
+    expect(getActionButtonText()).toEqual('Guardar');
     expect(getNameInputValue()).toEqual(existingItem.name);
     expect(getRemarksInputValue()).toEqual(existingItem.remarks);
     expect(getImportantInputValue()).toEqual(existingItem.important);
@@ -110,7 +110,7 @@ describe('ItemPage', () => {
     createComponentWithNewItem();
     expect(component).toBeTruthy();
     expect(getTitleText()).toEqual('Nuevo artículo');
-    expect(getButtonText()).toEqual('Añadir');
+    expect(getActionButtonText()).toEqual('Añadir');
     expect(getNameInputValue()).toBeNull();
     expect(getRemarksInputValue()).toBeNull();
     expect(getImportantInputValue()).toEqual(false);

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { ItemsService } from './services/items.service';
 import { UtilsService } from './services/utils.service';
+import { IonicGestureConfig } from './services/ionic-gesture-config';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { UtilsService } from './services/utils.service';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
     UtilsService,
     ItemsService
   ],
