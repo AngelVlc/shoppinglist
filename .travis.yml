@@ -12,13 +12,13 @@ jobs:
     - npm test
     - npm run e2e
   - stage: build
-    if: ((tag IS blank OR tag =~ ^(?!v).+) AND branch = "master") OR branch != "master"
+    if: tag IS blank OR tag =~ ^(?!v).+
     language: minimal
     script:
     - docker build -t shoppinglist .
     - docker run shoppinglist
   - stage: build && upload to google play
-    if: tag =~ ^v AND branch = "master"
+    if: tag =~ ^v
     language: minimal
     before_install:
     - openssl aes-256-cbc -K $encrypted_61627df7c213_key -iv $encrypted_61627df7c213_iv -in google_files.tar.enc -out google_files.tar -d
