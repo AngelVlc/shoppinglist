@@ -18,7 +18,7 @@ Unit test:
 
 e2e:
 ```
-> npm run e22
+> npm run e2e
 ```
 
 e2e test headless
