@@ -66,6 +66,7 @@ describe('new App', () => {
       mouseMove({ x: 0, y: -100 }).
       mouseUp().
       perform();
+    await browser.sleep(1000);
     items = await homePage.getItems();
     expect(item1Loc).not.toEqual(await items[0].getLocation());
   });
