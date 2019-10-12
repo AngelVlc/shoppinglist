@@ -38,7 +38,6 @@ capabilities: {
 
 ```
 > docker build -t shoppinglist .
-> docker run shoppinglist
 ```
 
 ### Upload to google play
