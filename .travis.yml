@@ -8,7 +8,8 @@ jobs:
       chrome: stable
     script:
     - npm audit
-    - npm install -g ionic cordova
+    - npm install -g @ionic/cli
+    - npm install -g cordova
     - npm test
     - npm run e2e
   - stage: build
