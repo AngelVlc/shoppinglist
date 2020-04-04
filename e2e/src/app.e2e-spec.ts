@@ -1,7 +1,7 @@
 import { HomePage } from './home.po';
 import { browser } from 'protractor';
 
-describe('new App', () => {
+describe('Shopping List App', () => {
   let homePage: HomePage;
 
   beforeEach(async () => {

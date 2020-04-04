@@ -17,6 +17,10 @@ export class BasePage {
     return browser.wait(protractor.ExpectedConditions.visibilityOf(element));
   }
 
+  public waitForNonVisibleElement(element: ElementFinder) {
+    return browser.wait(protractor.ExpectedConditions.invisibilityOf(element));
+  }
+
   public writeInIonicInputElement(ionicInput: ElementFinder, content: string) {
     const innerInput = ionicInput.$('input');
     return innerInput.sendKeys(content)

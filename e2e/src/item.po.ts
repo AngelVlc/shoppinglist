@@ -1,4 +1,5 @@
 import { BasePage } from "./base.po";
+import { ElementFinder } from "protractor";
 
 export class ItemPage extends BasePage {
   private _nameInput = 'name';
@@ -7,6 +8,7 @@ export class ItemPage extends BasePage {
   private _okButton = 'okBtn';
   private _cancelButton = 'cancelBtn';
   private _deleteButton = 'deleteBtn';
+  private _title = 'itemTitle';
 
   async fillFields(name: string, important: boolean, remarks: string) {
     if (important) {
@@ -38,16 +40,23 @@ export class ItemPage extends BasePage {
 
   clickOkButton() {
     const okButton = this.getElementByTestId(this._okButton);
-    return okButton.click();
+    okButton.click();
+    return this.waitForNonVisibleElement(this.itemTitle());
   }
 
   clickDeleteButton() {
     const deleteBtn = this.getElementByTestId(this._deleteButton);
-    return this.clickButton(deleteBtn);
+    this.clickButton(deleteBtn);
+    return this.waitForNonVisibleElement(this.itemTitle());
   }
 
   clickCancelButton() {
     const cancelButton = this.getElementByTestId(this._cancelButton);
-    return cancelButton.click();
+    cancelButton.click();
+    return this.waitForNonVisibleElement(this.itemTitle());
+  }
+
+  itemTitle(): ElementFinder {
+    return this.getElementByTestId(this._title);
   }
 }
