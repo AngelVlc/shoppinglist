@@ -21,9 +21,9 @@ e2e:
 > npm run e2e
 ```
 
-e2e test headless
+### Show chrome while e2e testing
 
-In e2e/protractor.conf.js:
+Remove headless arg in e2e/protractor.conf.js:
 
 ```
 capabilities: {
