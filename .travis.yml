@@ -1,13 +1,13 @@
 jobs:
   include:
-  - stage: npm audit && test
+  - stage: npm audit --audit-level=moderate && test
     language: node_js
     node_js:
     - 10.11.0
     addons:
       chrome: stable
     script:
-    - npm audit
+    - npm audit --audit-level=moderate
     - npm install -g @ionic/cli
     - npm install -g cordova
     - npm test
