@@ -3,7 +3,7 @@ jobs:
   - stage: npm audit --audit-level=moderate && test
     language: node_js
     node_js:
-    - 10.11.0
+    - 10.13.0
     addons:
       chrome: stable
     script:
