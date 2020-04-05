@@ -74,6 +74,6 @@ export class HomePage extends BasePage {
   async selectItem(item: ElementFinder) {
     await browser.actions().mouseDown(item).perform();
     await browser.sleep(300);
-    return browser.actions().mouseUp(item).perform();
+    return await browser.actions().mouseUp(item).perform();
   }
 }

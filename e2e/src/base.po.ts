@@ -33,6 +33,6 @@ export class BasePage {
 
   public async clickButton(button: ElementFinder) {
     await this.waitForClickableElement(button)
-    return button.click();
+    return await button.click();
   }
 }
