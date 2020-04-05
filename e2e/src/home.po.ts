@@ -1,12 +1,11 @@
-import { BasePage } from "./base.po";
-import { ItemPage } from "./item.po";
-import { browser, ElementFinder, ElementArrayFinder, by } from "protractor";
+import { BasePage } from './base.po';
+import { ItemPage } from './item.po';
+import { browser, ElementFinder, ElementArrayFinder, by } from 'protractor';
 
 export class HomePage extends BasePage {
 
   private _addButton = 'addBtn';
   private _deleteSelectedButton = 'deleteSelectedBtn';
-  private _title = 'homeTitle';
   private _itemPage = new ItemPage();
   private _importantItemColor = 'rgba(240, 65, 65, 1)';
   private _normalItemColor = 'rgba(34, 36, 40, 1)';
@@ -40,17 +39,11 @@ export class HomePage extends BasePage {
   async addItem(name: string, important: boolean, remarks: string) {
     await this.clickAddButton();
     await this._itemPage.fillFields(name, important, remarks);
-    await this._itemPage.clickOkButton();
-    return this.waitVisible();
+    return await this._itemPage.clickOkButton();
   }
 
   getItems(): ElementArrayFinder {
     return this.getAllElements('ion-item');
-  }
-
-  waitVisible() {
-    const title = this.getElementByTestId(this._title);
-    return this.waitForVisibleElement(title);
   }
 
   getItemText(item: ElementFinder) {
@@ -64,8 +57,7 @@ export class HomePage extends BasePage {
   async editItem(item: ElementFinder, name: string, important: boolean, remarks: string) {
     await item.click();
     await this._itemPage.fillFields(name, important, remarks);
-    await this._itemPage.clickOkButton();
-    return this.waitVisible();
+    return await this._itemPage.clickOkButton();
   }
 
   async deleteItem(item: ElementFinder) {
@@ -76,13 +68,12 @@ export class HomePage extends BasePage {
   async editAndCancelItem(item: ElementFinder, name: string, important: boolean, remarks: string) {
     await item.click();
     await this._itemPage.fillFields(name, important, remarks);
-    await this._itemPage.clickCancelButton();
-    return this.waitVisible();
+    return await this._itemPage.clickCancelButton();
   }
 
   async selectItem(item: ElementFinder) {
     await browser.actions().mouseDown(item).perform();
     await browser.sleep(300);
-    return browser.actions().mouseUp(item).perform();
+    return await browser.actions().mouseUp(item).perform();
   }
 }

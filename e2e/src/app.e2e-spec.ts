@@ -1,7 +1,7 @@
 import { HomePage } from './home.po';
 import { browser } from 'protractor';
 
-describe('new App', () => {
+describe('Shopping List App', () => {
   let homePage: HomePage;
 
   beforeEach(async () => {
@@ -76,6 +76,7 @@ describe('new App', () => {
     await homePage.addItem('item 2', false, null);
     await homePage.addItem('item 3', false, null);
     await homePage.addItem('item 4', false, null);
+    await browser.sleep(500);
     let items = await homePage.getItems();
     await homePage.selectItem(items[1].$('ion-label'));
     await homePage.selectItem(items[2].$('ion-label'));
