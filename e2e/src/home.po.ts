@@ -1,6 +1,6 @@
-import { BasePage } from "./base.po";
-import { ItemPage } from "./item.po";
-import { browser, ElementFinder, ElementArrayFinder, by } from "protractor";
+import { BasePage } from './base.po';
+import { ItemPage } from './item.po';
+import { browser, ElementFinder, ElementArrayFinder, by } from 'protractor';
 
 export class HomePage extends BasePage {
 

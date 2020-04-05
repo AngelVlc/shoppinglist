@@ -21,13 +21,13 @@ describe('UtilsService', () => {
       ]
     });
 
-    utilsService = TestBed.get(UtilsService);
+    utilsService = TestBed.inject(UtilsService);
     alertCtrlSpyObj = TestBed.get(AlertController);
     loadingCtrlSpyObj = TestBed.get(LoadingController);
   });
 
   it('should be created', () => {
-    const service: UtilsService = TestBed.get(UtilsService);
+    const service: UtilsService = TestBed.inject(UtilsService);
     expect(service).toBeTruthy();
   });
 

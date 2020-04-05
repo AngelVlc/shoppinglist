@@ -5,34 +5,34 @@ export class BasePage {
     return element(by.css(`[data-test-id="${testid}"]`));
   }
 
-  public getAllElements(css: string) : ElementArrayFinder {
+  public getAllElements(css: string): ElementArrayFinder {
     return element.all(by.css(css));
   }
 
-  public waitForClickableElement(element: ElementFinder) {
-    return browser.wait(protractor.ExpectedConditions.elementToBeClickable(element));
+  public waitForClickableElement(theElement: ElementFinder) {
+    return browser.wait(protractor.ExpectedConditions.elementToBeClickable(theElement));
   }
 
-  public waitForVisibleElement(element: ElementFinder) {
-    return browser.wait(protractor.ExpectedConditions.visibilityOf(element));
+  public waitForVisibleElement(theElement: ElementFinder) {
+    return browser.wait(protractor.ExpectedConditions.visibilityOf(theElement));
   }
 
-  public waitForNonVisibleElement(element: ElementFinder) {
-    return browser.wait(protractor.ExpectedConditions.invisibilityOf(element));
+  public waitForNonVisibleElement(theElement: ElementFinder) {
+    return browser.wait(protractor.ExpectedConditions.invisibilityOf(theElement));
   }
 
   public writeInIonicInputElement(ionicInput: ElementFinder, content: string) {
     const innerInput = ionicInput.$('input');
-    return innerInput.sendKeys(content)
+    return innerInput.sendKeys(content);
   }
 
   public writeInIonicTextAreaElement(ionicTextArea: ElementFinder, content: string) {
     const innerInput = ionicTextArea.$('textarea');
-    return innerInput.sendKeys(content)
+    return innerInput.sendKeys(content);
   }
 
   public async clickButton(button: ElementFinder) {
-    await this.waitForClickableElement(button)
+    await this.waitForClickableElement(button);
     return await button.click();
   }
 }

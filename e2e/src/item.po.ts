@@ -1,5 +1,5 @@
-import { BasePage } from "./base.po";
-import { ElementFinder } from "protractor";
+import { BasePage } from './base.po';
+import { ElementFinder } from 'protractor';
 
 export class ItemPage extends BasePage {
   private _nameInput = 'name';

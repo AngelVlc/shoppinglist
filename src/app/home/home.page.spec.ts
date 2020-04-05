@@ -143,9 +143,9 @@ describe('HomePage', () => {
       important: false,
       remarks: null
     };
-    component.onItemPressed(item)
+    component.onItemPressed(item);
     expect(component.selectedItems.length).toEqual(1);
-    component.onItemPressed(item)
+    component.onItemPressed(item);
     expect(component.selectedItems.length).toEqual(0);
   });
 
