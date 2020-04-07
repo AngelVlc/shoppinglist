@@ -21,7 +21,9 @@ e2e:
 > npm run e2e
 ```
 
-### Show chrome while e2e testing
+### e2e testing
+
+#### Show chrome while testing
 
 Remove headless arg in e2e/protractor.conf.js:
 
@@ -32,6 +34,12 @@ capabilities: {
   },
   'browserName': 'chrome'
 },
+```
+
+#### Pause test
+
+```
+browser.sleep(5000);
 ```
 
 ### Build local

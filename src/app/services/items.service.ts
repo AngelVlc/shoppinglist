@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
 import { UtilsService } from './utils.service';
-import { Item } from 'src/models/item';
+import { Item } from 'src/app/models/item';
 
 @Injectable({
   providedIn: 'root'

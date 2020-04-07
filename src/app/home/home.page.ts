@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Item } from 'src/models/item';
+import { Item } from 'src/app/models/item';
 import { ItemsService } from '../services/items.service';
 import { ModalController } from '@ionic/angular';
 import { ItemPage } from '../item/item.page';
@@ -54,6 +54,9 @@ export class HomePage {
 
   getItemLabel(item) {
     let result = item.name;
+    if (item.quantity > 1) {
+      result = `${item.quantity}x ${result}`;
+    }
     if (item.remarks) {
       result += ' (+info)';
     }
