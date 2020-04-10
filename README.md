@@ -52,3 +52,8 @@ browser.sleep(5000);
 
 1. Change app version in config.xml
 2. Push a tag starting with 'v'
+
+```
+git tag -a vx.x.x -m "vx.x.x"
+git push --follow-tags
+```
