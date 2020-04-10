@@ -6,7 +6,7 @@ import { By } from '@angular/platform-browser';
 import { ItemPage } from './item.page';
 
 import { ModalController, NavParams } from '@ionic/angular';
-import { Item } from 'src/models/item';
+import { Item } from 'src/app/models/item';
 
 describe('ItemPage', () => {
   let component: ItemPage;
@@ -16,7 +16,8 @@ describe('ItemPage', () => {
   const existingItem: Item = {
     name: 'wadus',
     important: true,
-    remarks: 'these are the remarks'
+    remarks: 'these are the remarks',
+    quantity: 5
   };
 
   function createComponent(params) {
@@ -73,6 +74,10 @@ describe('ItemPage', () => {
     return fixture.debugElement.query(By.css('[data-test-id="important"]')).properties.ngModel;
   }
 
+  function getQuantityInputValue(): number {
+    return fixture.debugElement.query(By.css('[data-test-id="quantity"]')).properties.ngModel;
+  }
+
   function getDeleteButtonElement(): DebugElement {
     return fixture.debugElement.query(By.css('[data-test-id="deleteBtn"]'));
   }
@@ -103,6 +108,7 @@ describe('ItemPage', () => {
     expect(getNameInputValue()).toEqual(existingItem.name);
     expect(getRemarksInputValue()).toEqual(existingItem.remarks);
     expect(getImportantInputValue()).toEqual(existingItem.important);
+    expect(getQuantityInputValue()).toEqual(existingItem.quantity);
     expect(getDeleteButtonElement()).not.toBeNull();
   });
 
@@ -114,6 +120,7 @@ describe('ItemPage', () => {
     expect(getNameInputValue()).toBeNull();
     expect(getRemarksInputValue()).toBeNull();
     expect(getImportantInputValue()).toEqual(false);
+    expect(getQuantityInputValue()).toEqual(1);
     expect(getDeleteButtonElement()).toBeNull();
   });
 

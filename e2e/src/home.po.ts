@@ -36,9 +36,9 @@ export class HomePage extends BasePage {
     return this.clickButton(button);
   }
 
-  async addItem(name: string, important: boolean, remarks: string) {
+  async addItem(name: string, important: boolean, remarks: string, quantity: number) {
     await this.clickAddButton();
-    await this._itemPage.fillFields(name, important, remarks);
+    await this._itemPage.fillFields(name, important, remarks, quantity);
     return await this._itemPage.clickOkButton();
   }
 
@@ -54,9 +54,9 @@ export class HomePage extends BasePage {
     return item.$('ion-label').getCssValue('color');
   }
 
-  async editItem(item: ElementFinder, name: string, important: boolean, remarks: string) {
+  async editItem(item: ElementFinder, name: string, important: boolean, remarks: string, quantity: number) {
     await item.click();
-    await this._itemPage.fillFields(name, important, remarks);
+    await this._itemPage.fillFields(name, important, remarks, quantity);
     return await this._itemPage.clickOkButton();
   }
 
@@ -65,9 +65,9 @@ export class HomePage extends BasePage {
     return this._itemPage.clickDeleteButton();
   }
 
-  async editAndCancelItem(item: ElementFinder, name: string, important: boolean, remarks: string) {
+  async editAndCancelItem(item: ElementFinder, name: string, important: boolean, remarks: string, quantity: number) {
     await item.click();
-    await this._itemPage.fillFields(name, important, remarks);
+    await this._itemPage.fillFields(name, important, remarks, quantity);
     return await this._itemPage.clickCancelButton();
   }
 

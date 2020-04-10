@@ -11,15 +11,15 @@ describe('Shopping List App', () => {
   });
 
   it('should allow to add an important item', async () => {
-    await homePage.addItem('test item', true, 'this is a remark');
+    await homePage.addItem('test item', true, 'this is a remark', 5);
     const items = await homePage.getItems();
     expect(items.length).toBe(1);
-    expect(await homePage.getItemText(items[0])).toEqual('test item (+info)');
+    expect(await homePage.getItemText(items[0])).toEqual('5x test item (+info)');
     expect(await homePage.isImportantItem(items[0])).toEqual(homePage.importantItemColor);
   });
 
   it('should allow to add a non important item', async () => {
-    await homePage.addItem('test item', false, null);
+    await homePage.addItem('test item', false, null, 1);
     const items = await homePage.getItems();
     expect(items.length).toBe(1);
     expect(await homePage.getItemText(items[0])).toEqual('test item');
@@ -27,8 +27,8 @@ describe('Shopping List App', () => {
   });
 
   it('should allow to delete an item', async () => {
-    await homePage.addItem('test item', false, null);
-    await homePage.addItem('test item', false, null);
+    await homePage.addItem('test item', false, null, null);
+    await homePage.addItem('test item', false, null, null);
     let items = await homePage.getItems();
     expect(items.length).toBe(2);
     await homePage.deleteItem(items[0]);
@@ -37,19 +37,19 @@ describe('Shopping List App', () => {
   });
 
   it('should allow to edit an existing item', async () => {
-    await homePage.addItem('test item', false, null);
+    await homePage.addItem('test item', false, null, null);
     let items = await homePage.getItems();
-    await homePage.editItem(items[0], ' replaced', true, 'remarks');
+    await homePage.editItem(items[0], 'replaced item', true, 'remarks', 5);
     items = await homePage.getItems();
     expect(items.length).toBe(1);
-    expect(await homePage.getItemText(items[0])).toEqual('test item replaced (+info)');
+    expect(await homePage.getItemText(items[0])).toEqual('5x replaced item (+info)');
     expect(await homePage.isImportantItem(items[0])).toEqual(homePage.importantItemColor);
   });
 
   it('should allow to cancel the edition of an existing item', async () => {
-    await homePage.addItem('test item', false, null);
+    await homePage.addItem('test item', false, null, 1);
     let items = await homePage.getItems();
-    await homePage.editAndCancelItem(items[0], ' replaced', true, 'remarks');
+    await homePage.editAndCancelItem(items[0], ' replaced', true, 'remarks', 5);
     items = await homePage.getItems();
     expect(items.length).toBe(1);
     expect(await homePage.getItemText(items[0])).toEqual('test item');
@@ -57,8 +57,8 @@ describe('Shopping List App', () => {
   });
 
   it('shoul allow to move the items', async () => {
-    await homePage.addItem('item 1', false, null);
-    await homePage.addItem('item 2', false, null);
+    await homePage.addItem('item 1', false, null, null);
+    await homePage.addItem('item 2', false, null, null);
     let items = await homePage.getItems();
     const item1Loc = await items[1].getLocation();
     await browser.actions().
@@ -72,10 +72,10 @@ describe('Shopping List App', () => {
   });
 
   it('should allow to delete several items', async () => {
-    await homePage.addItem('item 1', false, null);
-    await homePage.addItem('item 2', false, null);
-    await homePage.addItem('item 3', false, null);
-    await homePage.addItem('item 4', false, null);
+    await homePage.addItem('item 1', false, null, 1);
+    await homePage.addItem('item 2', false, null, 1);
+    await homePage.addItem('item 3', false, null, 1);
+    await homePage.addItem('item 4', false, null, 1);
     await browser.sleep(500);
     let items = await homePage.getItems();
     await homePage.selectItem(items[1].$('ion-label'));

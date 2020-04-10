@@ -23,11 +23,19 @@ export class BasePage {
 
   public writeInIonicInputElement(ionicInput: ElementFinder, content: string) {
     const innerInput = ionicInput.$('input');
+    innerInput.clear();
+    return innerInput.sendKeys(content);
+  }
+
+  public writeInIonicNumberInputElement(ionicInput: ElementFinder, content: number) {
+    const innerInput = ionicInput.$('input');
+    innerInput.clear();
     return innerInput.sendKeys(content);
   }
 
   public writeInIonicTextAreaElement(ionicTextArea: ElementFinder, content: string) {
     const innerInput = ionicTextArea.$('textarea');
+    innerInput.clear();
     return innerInput.sendKeys(content);
   }
 

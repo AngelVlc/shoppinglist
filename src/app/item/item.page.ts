@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavParams, ModalController } from '@ionic/angular';
-import { Item } from 'src/models/item';
+import { Item } from 'src/app/models/item';
 
 @Component({
   selector: 'app-item',

@@ -5,17 +5,21 @@ export class ItemPage extends BasePage {
   private _nameInput = 'name';
   private _remarkInput = 'remarks';
   private _importantToggle = 'important';
+  private _quantityInput = 'quantity';
   private _okButton = 'okBtn';
   private _cancelButton = 'cancelBtn';
   private _deleteButton = 'deleteBtn';
   private _title = 'itemTitle';
 
-  async fillFields(name: string, important: boolean, remarks: string) {
+  async fillFields(name: string, important: boolean, remarks: string, quantity: number) {
     if (important) {
       await this.toggleImportant();
     }
     if (remarks) {
       await this.setRemarks(remarks);
+    }
+    if (quantity) {
+      await this.setQuantity(quantity);
     }
     return this.setName(name);
   }
@@ -36,6 +40,12 @@ export class ItemPage extends BasePage {
     const remarksElement = this.getElementByTestId(this._remarkInput);
     await this.waitForVisibleElement(remarksElement);
     return this.writeInIonicTextAreaElement(remarksElement, content);
+  }
+
+  async setQuantity(quantity: number) {
+    const quantityElement = this.getElementByTestId(this._quantityInput);
+    await this.waitForVisibleElement(quantityElement);
+    return this.writeInIonicNumberInputElement(quantityElement, quantity);
   }
 
   clickOkButton() {

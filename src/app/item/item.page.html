@@ -10,10 +10,20 @@
       <ion-label>Nombre:</ion-label>
       <ion-input data-test-id="name" [(ngModel)]="item.name"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label>Importante:</ion-label>
-      <ion-toggle data-test-id="important" [(ngModel)]="item.important"></ion-toggle>
-    </ion-item>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Cantidad:</ion-label>
+          <ion-input type="number" data-test-id="quantity" [(ngModel)]="item.quantity"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Importante:</ion-label>
+          <ion-toggle data-test-id="important" [(ngModel)]="item.important"></ion-toggle>
+        </ion-item>
+      </ion-col>
+    </ion-row>
     <ion-item>
       <ion-label>Observaciones:</ion-label>
       <ion-textarea data-test-id="remarks" [(ngModel)]="item.remarks" rows="8"></ion-textarea>

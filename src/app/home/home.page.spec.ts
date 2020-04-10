@@ -7,7 +7,7 @@ import { HomePage } from './home.page';
 
 import { ModalController } from '@ionic/angular';
 import { ItemsService } from '../services/items.service';
-import { Item } from 'src/models/item';
+import { Item } from 'src/app/models/item';
 import { ItemPage } from '../item/item.page';
 
 import 'hammerjs';
@@ -65,7 +65,7 @@ describe('HomePage', () => {
     });
   });
 
-  it('should create component wiht items', async () => {
+  it('should create component with items', async () => {
     createComponent(existingItems);
     expect(component).toBeTruthy();
     fixture.whenRenderingDone().then(() => {
@@ -115,20 +115,34 @@ describe('HomePage', () => {
     });
   });
 
-  it('getItemLabel() method should add +info to the item name if it has remarks', async () => {
+  it('getItemLabel() method should show the item name if it does not have remarks and its quantity is 1', async () => {
     const item: Item = {
       name: 'wadus',
       important: false,
-      remarks: null
+      remarks: null,
+      quantity: 1
     };
     expect(component.getItemLabel(item)).toEqual('wadus');
+  });
 
+  it('getItemLabel() method should add +info to the item name if it has remarks', async () => {
     const itemsWithRemarks: Item = {
       name: 'wadus',
       important: true,
-      remarks: 'remarks'
+      remarks: 'remarks',
+      quantity: 1
     };
     expect(component.getItemLabel(itemsWithRemarks)).toEqual('wadus (+info)');
+  });
+
+  it('getItemLabel() method should add the quantity when it is greater than 1', async () => {
+    const item: Item = {
+      name: 'wadus',
+      important: true,
+      remarks: null,
+      quantity: 5
+    };
+    expect(component.getItemLabel(item)).toEqual('5x wadus');
   });
 
   it('ion reorder group should have disabled = false', async () => {
@@ -138,11 +152,7 @@ describe('HomePage', () => {
   });
 
   it('onItemPressed() should change the selected value of a component depending on its previous selected value', async () => {
-    const item: Item = {
-      name: 'wadus',
-      important: false,
-      remarks: null
-    };
+    const item = new Item();
     component.onItemPressed(item);
     expect(component.selectedItems.length).toEqual(1);
     component.onItemPressed(item);
@@ -222,7 +232,8 @@ describe('HomePage', () => {
           const newItem: Item = {
             name: 'new item',
             important: true,
-            remarks: 'the remarks'
+            remarks: 'the remarks',
+            quantity: 5
           };
           const detail = {
             data: {
@@ -232,9 +243,11 @@ describe('HomePage', () => {
           };
           await (component as any).onModalDismiss(detail);
           expect(component.items.length).toBe(itemsCount + 1);
-          expect(component.items[component.items.length - 1].name).toEqual(newItem.name);
-          expect(component.items[component.items.length - 1].important).toEqual(newItem.important);
-          expect(component.items[component.items.length - 1].remarks).toEqual(newItem.remarks);
+          const lastItem = component.items[component.items.length - 1];
+          expect(lastItem.name).toEqual(newItem.name);
+          expect(lastItem.important).toEqual(newItem.important);
+          expect(lastItem.remarks).toEqual(newItem.remarks);
+          expect(lastItem.quantity).toEqual(newItem.quantity);
           expect(itemsSrvSpyObj.saveItems).toHaveBeenCalled();
         });
       });
@@ -275,6 +288,8 @@ describe('HomePage', () => {
         const itemsCount = existingItems.length;
         fixture.whenRenderingDone().then(async () => {
           const modifiedItem = { ...existingItems[0] };
+          modifiedItem.name = 'modified';
+          modifiedItem.quantity += 1;
           const detail = {
             data: {
               item: modifiedItem,
@@ -283,9 +298,11 @@ describe('HomePage', () => {
           };
           await (component as any).onModalDismiss(detail);
           expect(component.items.length).toBe(itemsCount);
-          expect(component.items[0].name).toEqual(modifiedItem.name);
-          expect(component.items[0].important).toEqual(modifiedItem.important);
-          expect(component.items[0].remarks).toEqual(modifiedItem.remarks);
+          const item = component.items[0];
+          expect(item.name).toEqual(modifiedItem.name);
+          expect(item.important).toEqual(modifiedItem.important);
+          expect(item.remarks).toEqual(modifiedItem.remarks);
+          expect(item.quantity).toEqual(modifiedItem.quantity);
           expect(itemsSrvSpyObj.saveItems).toHaveBeenCalled();
         });
       });
