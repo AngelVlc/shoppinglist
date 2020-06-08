@@ -26,4 +26,4 @@ jobs:
       on:
         tags: true
         branch: master
-      script: bash scripts/deploy.sh
+      script: bash scripts/deploy_script.sh
