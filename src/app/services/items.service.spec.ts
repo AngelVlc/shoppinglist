@@ -29,7 +29,7 @@ describe('ItemsService', () => {
     storageSpyObj = TestBed.get(Storage);
     utilsSrvSpyObj = TestBed.get(UtilsService);
     loadingSpyObj = jasmine.createSpyObj('Loading', ['dismiss']);
-    utilsSrvSpyObj.showLoading.and.returnValue(loadingSpyObj);
+    utilsSrvSpyObj.showLoading.and.returnValue(Promise.resolve(loadingSpyObj));
 
     const item1 = new Item();
     item1.name = 'item1';
@@ -49,7 +49,7 @@ describe('ItemsService', () => {
   });
 
   it('loadItems() should return items stored in storage', async () => {
-    storageSpyObj.get.and.returnValue(items);
+    storageSpyObj.get.and.returnValue(Promise.resolve(items));
     const result = await itemsService.loadItems();
     expect(loadingSpyObj.dismiss.calls.count()).toEqual(1);
     expect(storageSpyObj.get.calls.count()).toEqual(1);
