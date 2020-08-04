@@ -12,8 +12,7 @@ import { ItemPage } from '../item/item.page';
 
 import 'hammerjs';
 
-describe('HomePage', () => {
-  let component: HomePage;
+describe('HomePage', () => {  
   let fixture: ComponentFixture<HomePage>;
   let modalCtrlSpyObj: jasmine.SpyObj<ModalController>;
   let itemsSrvSpyObj: jasmine.SpyObj<ItemsService>;
@@ -22,8 +21,9 @@ describe('HomePage', () => {
   function createComponent(items: Item[]) {
     itemsSrvSpyObj.loadItems.and.returnValue(Promise.resolve(items));
     fixture = TestBed.createComponent(HomePage);
-    component = fixture.componentInstance;
+    const component = fixture.componentInstance;
     fixture.detectChanges();
+    return component
   }
 
   function getAddButtonElement(): DebugElement {
@@ -56,7 +56,7 @@ describe('HomePage', () => {
   }));
 
   it('should create component wiht no items', () => {
-    createComponent([]);
+    const component = createComponent([]);
     expect(component).toBeTruthy();
     fixture.whenRenderingDone().then(() => {
       fixture.detectChanges();
@@ -66,7 +66,7 @@ describe('HomePage', () => {
   });
 
   it('should create component with items', async () => {
-    createComponent(existingItems);
+    const component = createComponent(existingItems);
     expect(component).toBeTruthy();
     fixture.whenRenderingDone().then(() => {
       fixture.detectChanges();
@@ -76,7 +76,7 @@ describe('HomePage', () => {
   });
 
   it('add btn click should open the modal', async () => {
-    createComponent(existingItems);
+    const component = createComponent(existingItems);
     const spy = spyOn<any>(component, 'openModal');
     spy.and.callFake((index) => {
       expect(index).toEqual(-1);
@@ -86,7 +86,7 @@ describe('HomePage', () => {
   });
 
   it('item tap should open the modal', async () => {
-    createComponent(existingItems);
+    const component = createComponent(existingItems);
     fixture.whenRenderingDone().then(() => {
       fixture.detectChanges();
       const foundItems = fixture.debugElement.queryAll(By.css('ion-item'));
@@ -101,7 +101,7 @@ describe('HomePage', () => {
   });
 
   it('item press should mark it as selected', async () => {
-    createComponent(existingItems);
+    const component = createComponent(existingItems);
     fixture.whenRenderingDone().then(() => {
       fixture.detectChanges();
       const foundItems = fixture.debugElement.queryAll(By.css('ion-item'));
@@ -122,6 +122,7 @@ describe('HomePage', () => {
       remarks: null,
       quantity: 1
     };
+    const component = createComponent([]);
     expect(component.getItemLabel(item)).toEqual('wadus');
   });
 
@@ -132,6 +133,7 @@ describe('HomePage', () => {
       remarks: 'remarks',
       quantity: 1
     };
+    const component = createComponent([]);
     expect(component.getItemLabel(itemsWithRemarks)).toEqual('wadus (+info)');
   });
 
@@ -142,16 +144,18 @@ describe('HomePage', () => {
       remarks: null,
       quantity: 5
     };
+    const component = createComponent([]);
     expect(component.getItemLabel(item)).toEqual('5x wadus');
   });
 
   it('ion reorder group should have disabled = false', async () => {
-    createComponent(existingItems);
+    const component = createComponent(existingItems);
     const reorderGroup = fixture.debugElement.query(By.css('[data-test-id="reorderGroup"]'));
     expect(reorderGroup.attributes['disabled']).toEqual('false');
   });
 
   it('onItemPressed() should change the selected value of a component depending on its previous selected value', async () => {
+    const component = createComponent(existingItems);
     const item = new Item();
     component.onItemPressed(item);
     expect(component.selectedItems.length).toEqual(1);
@@ -160,7 +164,7 @@ describe('HomePage', () => {
   });
 
   it('showDeleteButton() should return true if some item is selected and false when no one is selected', async () => {
-    createComponent(existingItems);
+    const component = createComponent(existingItems);
     fixture.whenRenderingDone().then(async () => {
       expect(component.showDeleteButton()).toEqual(false);
       component.selectedItems.push(component.items[0]);
@@ -172,7 +176,7 @@ describe('HomePage', () => {
     const items = [...existingItems];
     const originalLength = items.length;
     const firstItemName = items[0].name;
-    createComponent(existingItems);
+    const component = createComponent(existingItems);
     fixture.whenRenderingDone().then(async () => {
       component.selectedItems.push(component.items[0]);
       component.onDeleteSelectedButtonClicked();
@@ -184,7 +188,7 @@ describe('HomePage', () => {
   });
 
   it('isSelectedItem() should return true if the item is selected', async() => {
-    createComponent(existingItems);
+    const component = createComponent(existingItems);
     fixture.whenRenderingDone().then(async () => {
       expect(component.isSelectedItem(component.items[0])).toBe(false);
       component.selectedItems.push(component.items[0]);
@@ -194,7 +198,7 @@ describe('HomePage', () => {
 
   describe('openModal()', () => {
     it('should present the modal', async () => {
-      createComponent(existingItems);
+      const component = createComponent(existingItems);
       fixture.whenRenderingDone().then(async () => {
         const modalSpyObj = jasmine.createSpyObj('ItemPage', ['present', 'onDidDismiss']);
         modalCtrlSpyObj.create.and.returnValue(modalSpyObj);
@@ -213,7 +217,7 @@ describe('HomePage', () => {
 
     describe('and process the dismiss with a new item', () => {
       it('when the user cancels the modal', async () => {
-        createComponent(existingItems);
+        const component = createComponent(existingItems);
         const itemsCount = existingItems.length;
         fixture.whenRenderingDone().then(async () => {
           const detail = {
@@ -226,7 +230,7 @@ describe('HomePage', () => {
       });
 
       it('when the user accepts the modal', async () => {
-        createComponent(existingItems);
+        const component = createComponent(existingItems);
         const itemsCount = existingItems.length;
         fixture.whenRenderingDone().then(async () => {
           const newItem: Item = {
@@ -255,7 +259,7 @@ describe('HomePage', () => {
 
     describe('and process the dismiss with an existing item', () => {
       it('when the user deletes an existing item', async () => {
-        createComponent(existingItems);
+        const component = createComponent(existingItems);
         const itemsCount = existingItems.length;
         fixture.whenRenderingDone().then(async () => {
           const detail = {
@@ -271,7 +275,7 @@ describe('HomePage', () => {
       });
 
       it('when the user cancels the modal', async () => {
-        createComponent(existingItems);
+        const component = createComponent(existingItems);
         const itemsCount = existingItems.length;
         fixture.whenRenderingDone().then(async () => {
           const detail = {
@@ -284,7 +288,7 @@ describe('HomePage', () => {
       });
 
       it('when the user accepts the modal', async () => {
-        createComponent(existingItems);
+        const component = createComponent(existingItems);
         const itemsCount = existingItems.length;
         fixture.whenRenderingDone().then(async () => {
           const modifiedItem = { ...existingItems[0] };
