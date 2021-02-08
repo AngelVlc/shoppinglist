@@ -1,6 +1,6 @@
 import { DebugElement } from '@angular/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { ItemPage } from './item.page';
@@ -82,7 +82,7 @@ describe('ItemPage', () => {
     return fixture.debugElement.query(By.css('[data-test-id="deleteBtn"]'));
   }
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     const modalCtrlSpy = jasmine.createSpyObj('ModalController', ['dismiss']);
     const navParamsSpy = jasmine.createSpyObj('NavParams', ['get']);
 
