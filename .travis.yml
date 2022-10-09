@@ -7,7 +7,7 @@ jobs:
     addons:
       chrome: stable
     script:
-    - npm audit --audit-level=moderate
+    - npm audit --production
     - npm install -g @ionic/cli
     - npm install -g cordova
     - npm test
