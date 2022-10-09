@@ -1,0 +1,43 @@
+version: 2.1
+
+workflows:
+    version: 2
+    build_and_test:
+      jobs:
+        - test
+        - build:
+            requires:
+              - test
+        - deploy:
+            requires:
+              - build
+            filters:
+              branches:
+                only: master
+
+jobs:
+  test:
+    machine:
+      image: ubuntu-2004:202111-01
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm test
+      - run: sudo apt update && sudo apt-get --only-upgrade install google-chrome-stable
+      - run: npm run e2e
+  build:
+    machine:
+      image: ubuntu-2004:202111-01
+    steps:
+      - checkout
+      - run: docker build -t shoppinglist .
+      - run: docker run shoppinglist ionic cordova build android --release
+  deploy:
+    machine:
+      image: ubuntu-2004:202111-01
+    steps:
+      - checkout
+      - run: echo $KEYSTORE_CONTENT_BASE64 | base64 -d > ShoppingList.keystore
+      - run: echo $GOOGLE_PLAY_CREDENTIALS_JSON_BASE64 | base64 -d > google-play-credentials.json
+      - run: docker build -t shoppinglist --build-arg KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD -f Dockerfile.deploy .
+      - run: docker run shoppinglist npm start /app/ShoppingList_release_signed.apk io.abh.shoppinglist
