@@ -13,8 +13,11 @@ COPY . $APP
 
 RUN npm rebuild node-sass
 RUN ionic cordova build android --release
-RUN jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore ./ShoppingList.keystore -storepass $KEYSTORE_PASSWORD /app/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ShoppingList \
-  && zipalign 4 /app/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ShoppingList_release_signed.apk
+
+COPY ShoppingList.keystore $APP
+
+RUN jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore ./ShoppingList.keystore -storepass $KEYSTORE_PASSWORD /app/platforms/android/app/build/outputs/bundle/release/app-release.aab ShoppingList \
+  && zipalign 4 /app/platforms/android/app/build/outputs/bundle/release/app-release.aab ShoppingList_release_signed.apk
 
 FROM angelvlc/google-play-publish
 ENV APP=/app 
