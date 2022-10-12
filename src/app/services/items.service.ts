@@ -18,14 +18,14 @@ export class ItemsService {
 
     try {
       let data = await this.storage.get(this.storageKey);
-      await loading.dismiss();
       if (!data) {
         data = [];
       }
       return data;
     } catch (error) {
-      await loading.dismiss();
       this.utilsSrv.showAlert('Error al leer del storage', error.message);
+    } finally {
+      await loading.dismiss();
     }
   }
 
@@ -34,10 +34,10 @@ export class ItemsService {
 
     try {
       await this.storage.set(this.storageKey, items);
-      await loading.dismiss();
     } catch (error) {
-      await loading.dismiss();
       this.utilsSrv.showAlert('Error al guardar en el storage', error.message);
+    } finally {
+      await loading.dismiss();
     }
   }
 }
