@@ -6,7 +6,7 @@ describe('IonicGestureConfigService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: IonicGestureConfig = TestBed.get(IonicGestureConfig);
+    const service: IonicGestureConfig = TestBed.inject(IonicGestureConfig);
     expect(service).toBeTruthy();
   });
 });

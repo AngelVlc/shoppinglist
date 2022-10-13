@@ -45,8 +45,8 @@ describe('HomePage', () => {
     })
       .compileComponents();
 
-    modalCtrlSpyObj = TestBed.get(ModalController);
-    itemsSrvSpyObj = TestBed.get(ItemsService);
+    modalCtrlSpyObj = TestBed.inject(ModalController) as jasmine.SpyObj<ModalController>;
+    itemsSrvSpyObj = TestBed.inject(ItemsService) as jasmine.SpyObj<ItemsService>;
 
     const item1 = new Item();
     item1.name = 'item1';

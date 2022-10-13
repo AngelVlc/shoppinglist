@@ -25,9 +25,9 @@ describe('ItemsService', () => {
       ]
     });
 
-    itemsService = TestBed.get(ItemsService);
-    storageSpyObj = TestBed.get(Storage);
-    utilsSrvSpyObj = TestBed.get(UtilsService);
+    itemsService = TestBed.inject(ItemsService);
+    storageSpyObj = TestBed.inject(Storage) as jasmine.SpyObj<Storage>;
+    utilsSrvSpyObj = TestBed.inject(UtilsService) as jasmine.SpyObj<UtilsService>;
     loadingSpyObj = jasmine.createSpyObj('Loading', ['dismiss']);
     utilsSrvSpyObj.showLoading.and.returnValue(Promise.resolve(loadingSpyObj));
 

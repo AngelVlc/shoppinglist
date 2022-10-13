@@ -96,8 +96,8 @@ describe('ItemPage', () => {
     })
       .compileComponents();
 
-    modalCtrlSpyObj = TestBed.get(ModalController);
-    navParamsSpyObj = TestBed.get(NavParams);
+    modalCtrlSpyObj = TestBed.inject(ModalController) as jasmine.SpyObj<ModalController>;
+    navParamsSpyObj = TestBed.inject(NavParams) as jasmine.SpyObj<NavParams>;
   }));
 
   it('should create the component for an existing item', () => {

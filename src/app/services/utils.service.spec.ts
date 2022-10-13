@@ -22,8 +22,8 @@ describe('UtilsService', () => {
     });
 
     utilsService = TestBed.inject(UtilsService);
-    alertCtrlSpyObj = TestBed.get(AlertController);
-    loadingCtrlSpyObj = TestBed.get(LoadingController);
+    alertCtrlSpyObj = TestBed.inject(AlertController) as jasmine.SpyObj<AlertController>;
+    loadingCtrlSpyObj = TestBed.inject(LoadingController) as jasmine.SpyObj<LoadingController>;
   });
 
   it('should be created', () => {
