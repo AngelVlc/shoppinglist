@@ -8,11 +8,12 @@ COPY package.json $APP
 COPY package-lock.json $APP
 
 RUN npm install
+RUN npx cap telemetry off
 
 COPY . $APP
 
 RUN npm rebuild node-sass
-RUN ionic cordova build android --release
+RUN ./build-release-aab.sh
 
 COPY ShoppingList.keystore $APP
 
