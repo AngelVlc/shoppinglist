@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo 'Ionic build'
+ionic build
+
 echo 'Capacitor sync'
 npx cap sync
 
