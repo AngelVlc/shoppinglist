@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ItemsService } from './items.service';
-import { Storage } from '@ionic/storage';
+import { Storage } from '@ionic/storage-angular';
 import { Item } from 'src/app/models/item';
 import { UtilsService } from './utils.service';
 import { Components } from '@ionic/core';

@@ -31,7 +31,7 @@ jobs:
     steps:
       - checkout
       - run: docker build -t shoppinglist .
-      - run: docker run shoppinglist ionic cordova build android --release
+      - run: docker run shoppinglist ./build-release-aab.sh
   deploy:
     machine:
       image: ubuntu-2004:202111-01
